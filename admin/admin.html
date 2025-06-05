@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <!-- Metadados e configurações básicas existentes -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrackParts - Sistema de Rastreabilidade de Peças</title>
+    <link rel="stylesheet" href="admin.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js" integrity="sha512-ElRFoEQdI5Ht6kZvyzXhcG0NTYVzxiAUberOAGkElmEk2XD1yzLigtXACdWbZZopP85lX/I5woda9yicNWYTNg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <!-- CABEÇALHO: Contém logo e informações do usuário -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img id="logo-img" src="imagens/logo.png" alt="TrackParts Logo">
+                <h1></h1>
+            </div>
+            <div class="user-info">
+                <span class="username">Olá, Administrador</span>
+                <!-- Botão de alternância de tema -->
+                <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+                    <span class="theme-icon">🌙</span>
+                </button>
+                <a href="../login.html" class="btn-logout">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVEGAÇÃO PRINCIPAL: Menu principal do sistema -->
+    <nav>
+        <div class="container">
+            <ul class="main-menu">
+                <li><a href="#dashboard">Dashboard</a></li>
+                <li><a href="#inventory">Inventário</a></li>
+                <li><a href="#tracking">Rastreabilidade</a></li>
+                <li><a href="#approvals">Aprovações</a></li>
+                <li><a href="#reports">Relatórios</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL: Contém todas as seções do sistema -->
+    <main>
+        <div class="container">
+            <!-- SEÇÃO: Dashboard com cards de métricas -->
+            <section id="dashboard">
+                <h2>Dashboard</h2>
+                <div class="dashboard-cards">
+                    <!-- Card: Peças em estoque -->
+                    <div class="card">
+                        <h3>Peças em Estoque</h3>
+                        <p class="number">1.245</p>
+                        <p class="trend positive">↑ 5% desde o mês passado</p>
+                    </div>
+                    <!-- Card: Kits completos -->
+                    <div class="card">
+                        <h3>Kits Completos</h3>
+                        <p class="number">87</p>
+                        <p class="trend negative">↓ 2% desde o mês passado</p>
+                    </div>
+                    <!-- Card: Aprovações pendentes -->
+                    <div class="card">
+                        <h3>Aprovações Pendentes</h3>
+                        <p class="number">12</p>
+                        <p class="trend neutral">= Sem alteração</p>
+                    </div>
+                    <!-- Card: Tempo médio de localização -->
+                    <div class="card">
+                        <h3>Tempo Médio de Localização</h3>
+                        <p class="number">3.5 min</p>
+                        <p class="trend positive">↑ 30% mais rápido</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Inventário Digital com busca, filtros e tabela -->
+            <section id="inventory">
+                <h2>Inventário Digital</h2>
+                <!-- Barra de busca e filtros principais -->
+                <div class="search-filter">
+                    <input type="text" placeholder="Buscar peças...">
+                    <select>
+                        <option>Todos os locais</option>
+                        <option>Depósito A</option>
+                        <option>Depósito B</option>
+                        <option>Setor de Produção</option>
+                    </select>
+                    <button class="btn-primary">Buscar</button>
+                    <button class="btn-add-item">+ Cadastrar Peça</button>
+                </div>
+                
+                <!-- Filtros avançados para refinamento de busca -->
+                <div class="advanced-filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="status-filter">Status:</label>
+                            <select id="status-filter">
+                                <option value="all">Todos</option>
+                                <option value="disponível">Disponível</option>
+                                <option value="estoque baixo">Estoque Baixo</option>
+                                <option value="reservado">Reservado</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label for="quantity-filter">Quantidade:</label>
+                            <select id="quantity-filter">
+                                <option value="all">Todos</option>
+                                <option value="low">Baixa (≤ 10)</option>
+                                <option value="medium">Média (11-50)</option>
+                                <option value="high">Alta (> 50)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Informações sobre os resultados da busca -->
+                <div class="search-results-info">
+                    <span>Mostrando todos os itens</span>
+                </div>
+                
+                <!-- Histórico de buscas recentes -->
+                <div class="search-history-container">
+                    <h4>Buscas recentes</h4>
+                    <div class="search-history-items">
+                        <!-- Itens de histórico de busca serão adicionados via JavaScript -->
+                    </div>
+                    <button class="btn-secondary">Limpar histórico</button>
+                </div>
+                
+                <!-- Tabela principal de inventário -->
+                <div class="inventory-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Descrição</th>
+                                <th>Localização</th>
+                                <th>Quantidade</th>
+                                <th>Status</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Linha de peça: Engrenagem -->
+                            <tr>
+                                <td>TP-10023</td>
+                                <td>Engrenagem 15mm</td>
+                                <td>Depósito A - Prateleira 3</td>
+                                <td>45</td>
+                                <td><span class="status available">Disponível</span></td>
+                                <td>
+                                    <button class="btn-action btn-details">Detalhes</button>
+                                    <button class="btn-action btn-move">Movimentar</button>
+                                </td>
+                            </tr>
+                            <!-- Linha de peça: Kit Manutenção -->
+                            <tr>
+                                <td>TP-10024</td>
+                                <td>Kit Manutenção Tipo B</td>
+                                <td>Depósito B - Seção 7</td>
+                                <td>12</td>
+                                <td><span class="status low">Estoque Baixo</span></td>
+                                <td>
+                                    <button class="btn-action btn-details">Detalhes</button>
+                                    <button class="btn-action btn-move">Movimentar</button>
+                                </td>
+                            </tr>
+                            <!-- Linha de peça: Sensor -->
+                            <tr>
+                                <td>TP-10025</td>
+                                <td>Sensor de Pressão</td>
+                                <td>Setor de Produção</td>
+                                <td>8</td>
+                                <td><span class="status reserved">Reservado</span></td>
+                                <td>
+                                    <button class="btn-action btn-details">Detalhes</button>
+                                    <button class="btn-action btn-move">Movimentar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Paginação da tabela de inventário -->
+                <div class="pagination">
+                    <a href="#">&laquo;</a>
+                    <a href="#" class="active">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">&raquo;</a>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Rastreabilidade de Peças -->
+            <section id="tracking">
+                <h2>Rastreabilidade de Peças</h2>
+                <div class="tracking-system">
+                    <!-- Informações sobre o sistema de rastreabilidade -->
+                    <article class="tracking-info">
+                        <h3>Como Funciona</h3>
+                        <p>Nosso sistema de rastreabilidade utiliza códigos QR e RFID para monitorar a localização exata e o histórico de cada peça em tempo real.</p>
+                        <ul class="benefits">
+                            <li>Localização precisa de cada peça</li>
+                            <li>Histórico completo de movimentações</li>
+                            <li>Redução de 85% no tempo de busca</li>
+                            <li>Eliminação de perdas e extravios</li>
+                        </ul>
+                        <a href="#" class="btn-secondary">Saiba mais</a>
+                    </article>
+                    
+                    <!-- Scanner de QR Code/RFID para rastreio -->
+                    <div class="tracking-scanner">
+                        <h3>Escaneie o código da peça</h3>
+                        <div class="scanner-box">
+                            <div class="scanner-placeholder">
+                                <span>Scanner QR/RFID</span>
+                            </div>
+                            <input type="text" placeholder="Ou digite o código da peça...">
+                            <button class="btn-primary">Rastrear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Área para exibir resultados de rastreamento (inicialmente oculta) -->
+                <div class="tracking-result" style="display: none;">
+                    <!-- Conteúdo será preenchido dinamicamente -->
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Fluxo de Aprovações -->
+            <section id="approvals">
+                <h2>Fluxo de Aprovações</h2>
+                <div class="approval-flow">
+                    <!-- Explicação do sistema de aprovações -->
+                    <article class="approval-explanation">
+                        <h3>Novo Sistema de Aprovações</h3>
+                        <p>O processo seguro de aprovações em múltiplos níveis garante controle e transparência em todas as movimentações de peças.</p>
+                        <ul class="approval-steps">
+                            <li><span>1</span> Solicitação registrada pelo requisitante</li>
+                            <li><span>2</span> Aprovação do supervisor direto</li>
+                            <li><span>3</span> Verificação automática de disponibilidade</li>
+                            <li><span>4</span> Liberação e registro no sistema</li>
+                        </ul>
+                    </article>
+                    
+                    <!-- Lista de aprovações pendentes -->
+                    <div class="pending-approvals">
+                        <h3>Aprovações Pendentes</h3>
+                        <div class="approval-list">
+                            <!-- Aprovação pendente 1 -->
+                            <div class="approval-item">
+                                <div class="approval-header">
+                                    <span class="approval-id">REQ-2023-042</span>
+                                    <span class="approval-date">14/04/2025</span>
+                                </div>
+                                <div class="approval-content">
+                                    <p><strong>Solicitante:</strong> João Silva</p>
+                                    <p><strong>Item:</strong> Kit de Manutenção Tipo A</p>
+                                    <p><strong>Quantidade:</strong> 1</p>
+                                    <p><strong>Justificativa:</strong> Manutenção programada da linha 3</p>
+                                </div>
+                                <div class="approval-actions">
+                                    <button class="btn-approve">Aprovar</button>
+                                    <button class="btn-reject">Rejeitar</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Aprovação pendente 2 -->
+                            <div class="approval-item">
+                                <div class="approval-header">
+                                    <span class="approval-id">REQ-2023-043</span>
+                                    <span class="approval-date">14/04/2025</span>
+                                </div>
+                                <div class="approval-content">
+                                    <p><strong>Solicitante:</strong> Maria Oliveira</p>
+                                    <p><strong>Item:</strong> Sensores de temperatura</p>
+                                    <p><strong>Quantidade:</strong> 5</p>
+                                    <p><strong>Justificativa:</strong> Substituição de componentes com desgaste</p>
+                                </div>
+                                <div class="approval-actions">
+                                    <button class="btn-approve">Aprovar</button>
+                                    <button class="btn-reject">Rejeitar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO: Relatórios e Análises -->
+            <section id="reports">
+                <h2>Relatórios e Análises</h2>
+                <div class="reports-grid">
+                    <!-- Card de relatório: Consumo Mensal -->
+                    <article class="report-card">
+                        <h3>Consumo Mensal</h3>
+                        <div class="chart-placeholder">
+                            <span>Gráfico de Consumo</span>
+                        </div>
+                        <p>Análise do consumo de peças nos últimos 12 meses, com identificação de tendências e sazonalidades.</p>
+                        <a href="#" id="report-consumption" class="btn-secondary btn-report">Ver relatório completo</a>
+                    </article>
+                    
+                    <!-- Card de relatório: Eficiência Logística -->
+                    <article class="report-card">
+                        <h3>Eficiência Logística</h3>
+                        <div class="chart-placeholder">
+                            <span>Gráfico de Eficiência</span>
+                        </div>
+                        <p>Dados sobre redução de movimentações logísticas e tempo economizado com o novo sistema.</p>
+                        <a href="#" id="report-logistics" class="btn-secondary btn-report">Ver relatório completo</a>
+                    </article>
+                    
+                    <!-- Card de relatório: Inventário Otimizado -->
+                    <article class="report-card">
+                        <h3>Inventário Otimizado</h3>
+                        <div class="chart-placeholder">
+                            <span>Gráfico de Otimização</span>
+                        </div>
+                        <p>Análise de redução de desperdício através da otimização do estoque de kits e peças individuais.</p>
+                        <a href="#" id="report-inventory" class="btn-secondary btn-report">Ver relatório completo</a>
+                    </article>
+                    
+                    <!-- Card de relatório: Tempo de Resposta -->
+                    <article class="report-card">
+                        <h3>Tempo de Resposta</h3>
+                        <div class="chart-placeholder">
+                            <span>Gráfico de Tempo</span>
+                        </div>
+                        <p>Métricas de tempo economizado em cada etapa do processo, desde a solicitação até a entrega.</p>
+                        <a href="#" id="report-response-time" class="btn-secondary btn-report">Ver relatório completo</a>
+                    </article>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAINEL DE AJUDA: Acessível de qualquer lugar da aplicação -->
+        <aside class="help-panel">
+            <div class="help-toggle">?</div>
+            <div class="help-content">
+                <h3>Suporte Rápido</h3>
+                <ul class="help-links">
+                    <li><a href="#">Como rastrear uma peça</a></li>
+                    <li><a href="#">Gerenciamento de kits</a></li>
+                    <li><a href="#">Fluxo de aprovações</a></li>
+                    <li><a href="#">Importação da planilha Excel</a></li>
+                    <li><a href="#">Tutoriais em vídeo</a></li>
+                </ul>
+                <h4>Precisa de ajuda?</h4>
+                <button class="btn-support">Contatar Suporte</button>
+            </div>
+        </aside>
+    </main>
+
+    <!-- RODAPÉ: Informações da empresa e links adicionais -->
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <div class="footer-logo">
+                    <img src="imagens/logoDark.png" alt="Negrão Ferragens Logo">
+                    <span>Negrão Ferragens</span>
+                </div>
+                <p>&copy; 2025 Negrão Ferragens - Sistema de Rastreabilidade de Peças. Todos os direitos reservados.</p>
+            </div>
+            <div class="footer-links">
+                <ul>
+                    <li><a href="#">Sobre nós</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAIS: Janelas de diálogo para operações específicas -->
+    
+    <!-- Modal para Cadastro de Peça -->
+    <div id="modal-add-item" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Cadastrar Nova Peça</h3>
+            <form id="form-add-item">
+                <!-- Campos para entrada de dados da nova peça -->
+                <div class="form-group">
+                    <label for="item-code">Código:</label>
+                    <input type="text" id="item-code" required placeholder="Ex: TP-10028">
+                </div>
+                <div class="form-group">
+                    <label for="item-description">Descrição:</label>
+                    <input type="text" id="item-description" required placeholder="Ex: Engrenagem 15mm">
+                </div>
+                <div class="form-group">
+                    <label for="item-location">Localização:</label>
+                    <select id="item-location" required>
+                        <option value="">Selecione uma localização</option>
+                        <option value="Depósito A">Depósito A</option>
+                        <option value="Depósito B">Depósito B</option>
+                        <option value="Setor de Produção">Setor de Produção</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="item-sublocation">Localização Específica:</label>
+                    <input type="text" id="item-sublocation" placeholder="Ex: Prateleira 3">
+                </div>
+                <div class="form-group">
+                    <label for="item-quantity">Quantidade:</label>
+                    <input type="number" id="item-quantity" required min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="item-status">Status:</label>
+                    <select id="item-status" required>
+                        <option value="available">Disponível</option>
+                        <option value="low">Estoque Baixo</option>
+                        <option value="reserved">Reservado</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-cancel">Cancelar</button>
+                    <button type="submit" class="btn-primary">Cadastrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal para Detalhes da Peça -->
+    <div id="modal-details" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Detalhes da Peça</h3>
+            <!-- Informações detalhadas sobre a peça selecionada -->
+            <div class="item-details">
+                <div class="detail-row">
+                    <span class="detail-label">Código:</span>
+                    <span id="detail-code" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Descrição:</span>
+                    <span id="detail-description" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Localização:</span>
+                    <span id="detail-location" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Quantidade:</span>
+                    <span id="detail-quantity" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span id="detail-status" class="detail-value"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Última atualização:</span>
+                    <span id="detail-updated" class="detail-value">14/04/2025 14:32</span>
+                </div>
+            </div>
+            
+            <!-- Histórico de movimentações da peça -->
+            <div class="item-history">
+                <h4>Histórico de Movimentações</h4>
+                <div class="history-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Origem</th>
+                                <th>Destino</th>
+                                <th>Responsável</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body">
+                            <tr>
+                                <td>12/04/2025</td>
+                                <td>Depósito B</td>
+                                <td>Depósito A - Prateleira 3</td>
+                                <td>Maria Oliveira</td>
+                            </tr>
+                            <tr>
+                                <td>05/04/2025</td>
+                                <td>Recebimento</td>
+                                <td>Depósito B</td>
+                                <td>Carlos Santos</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn-secondary modal-cancel">Fechar</button>
+                <button type="button" class="btn-primary btn-open-move">Movimentar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para Movimentação de Peça -->
+    <div id="modal-move" class="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3>Movimentar Peça</h3>
+            <form id="form-move-item">
+                <!-- Identificação da peça a ser movimentada -->
+                <div class="item-to-move">
+                    <div class="detail-row">
+                        <span class="detail-label">Código:</span>
+                        <span id="move-code" class="detail-value"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Descrição:</span>
+                        <span id="move-description" class="detail-value"></span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Localização Atual:</span>
+                        <span id="move-current-location" class="detail-value"></span>
+                    </div>
+                </div>
+                
+                <!-- Campos para definir nova localização e detalhes da movimentação -->
+                <div class="form-group">
+                    <label for="move-location">Nova Localização:</label>
+                    <select id="move-location" required>
+                        <option value="">Selecione uma localização</option>
+                        <option value="Depósito A">Depósito A</option>
+                        <option value="Depósito B">Depósito B</option>
+                        <option value="Setor de Produção">Setor de Produção</option>
+                        <option value="Manutenção">Manutenção</option>
+                        <option value="Expedição">Expedição</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="move-sublocation">Localização Específica:</label>
+                    <input type="text" id="move-sublocation" placeholder="Ex: Prateleira 3">
+                </div>
+                <div class="form-group">
+                    <label for="move-quantity">Quantidade a Movimentar:</label>
+                    <input type="number" id="move-quantity" required min="1" value="1">
+                </div>
+                <div class="form-group">
+                    <label for="move-reason">Motivo da Movimentação:</label>
+                    <select id="move-reason" required>
+                        <option value="">Selecione um motivo</option>
+                        <option value="Transferência">Transferência de Local</option>
+                        <option value="Requisição">Requisição para Uso</option>
+                        <option value="Manutenção">Envio para Manutenção</option>
+                        <option value="Devolução">Devolução ao Estoque</option>
+                        <option value="Descarte">Descarte/Baixa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="move-notes">Observações:</label>
+                    <textarea id="move-notes" rows="3" placeholder="Observações adicionais sobre a movimentação..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary modal-cancel">Cancelar</button>
+                    <button type="submit" class="btn-primary">Confirmar Movimentação</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Lista de sugestões para preenchimento automático de busca -->
+    <datalist id="search-suggestions">
+        <!-- Opções serão adicionadas via JavaScript -->
+    </datalist>
+
+    <!-- Referência ao arquivo JavaScript para funcionalidades interativas -->
+    <script src="admin.js"></script>
+    <script src="charts.js"></script>
+    <script src="temas.js"></script>
+</body>
+</html>

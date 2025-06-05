@@ -1,0 +1,3183 @@
+/* ==========================================================================
+   Sistema de Gerenciamento de Inventário - Estilos CSS (Responsivos) com Modo Escuro
+   
+   ÍNDICE:
+   1. Variáveis e Reset
+   2. Elementos Básicos
+   3. Botões e Controles
+   4. Modais
+   5. Formulários
+   6. Layout de Cabeçalho e Navegação
+   7. Conteúdo Principal
+   8. Dashboard
+   9. Sistema de Inventário
+   10. Sistema de Rastreamento
+   11. Fluxo de Aprovação
+   12. Relatórios e Análises
+   13. Painel de Ajuda
+   14. Rodapé
+   15. Responsividade
+   16. Utilitários e Componentes Específicos
+   17. Animações
+   18. Modo Escuro
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Variáveis e Reset
+   ========================================================================== */
+
+/* Reset básico para todos os elementos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Variáveis CSS para cores e valores comuns */
+:root {
+    /* Modo Claro (padrão) */
+    --bg-color: #f5f7fa;
+    --card-bg: white;
+    --text-primary: #444;
+    --text-secondary: #666;
+    --text-muted: #777;
+    --border-color: #e1e5eb;
+    --input-border: #e1e5eb;
+    --primary-color: #333;
+    --secondary-color: #00a0e9;
+    --accent-color: #ff6b6b;
+    --dark-color: #333;
+    --light-color: #f5f7fa;
+    
+    /* Cores de feedback */
+    --success-color: #28a745;
+    --warning-color: #ffc107;
+    --danger-color: #dc3545;
+    
+    /* Cores neutras */
+    --gray-color: #e1e5eb;
+    --text-color: #444;
+    --text-light: #666;
+    
+    /* Elementos de UI */
+    --border-radius: 4px;
+    --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+    --light-accent: #e6f7ff;
+    
+    /* Variáveis para responsividade */
+    --container-padding: 20px;
+    --section-spacing: 30px;
+    --card-spacing: 20px;
+    --mobile-spacing: 15px;
+
+    /* Variáveis específicas para temas */
+    --header-bg: white;
+    --nav-bg: #333;
+    --footer-bg: #333;
+    --footer-text: white;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --shadow-color-deep: rgba(0, 0, 0, 0.08);
+    --theme-toggle-bg: #333;
+    --theme-toggle-text: #fff;
+}
+
+/* Modo Escuro */
+[data-theme="dark"] {
+    --bg-color: #1a1a1a;
+    --card-bg: #2a2a2a;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #999;
+    --border-color: #444;
+    --input-border: #555;
+    --primary-color:rgb(185, 185, 185);
+    --secondary-color: #5cb3f0;
+    --accent-color: #ff8a80;
+    --dark-color: #e0e0e0;
+    --light-color: #2a2a2a;
+    
+    /* Cores de feedback para modo escuro */
+    --success-color: #81c784;
+    --warning-color: #ffb74d;
+    --danger-color: #e57373;
+    
+    /* Cores neutras para modo escuro */
+    --gray-color: #444;
+    --text-color: #e0e0e0;
+    --text-light: #b0b0b0;
+    
+    /* Elementos de UI para modo escuro */
+    --light-accent: rgba(74, 144, 226, 0.1);
+    
+    /* Variáveis específicas para temas escuros */
+    --header-bg: #2a2a2a;
+    --nav-bg: #1a1a1a;
+    --footer-bg: #111;
+    --footer-text: #e0e0e0;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-color-deep: rgba(0, 0, 0, 0.5);
+    --theme-toggle-bg: #e0e0e0;
+    --theme-toggle-text: #333;
+}
+
+/* Estilos base do corpo da página */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ==========================================================================
+   2. Elementos Básicos
+   ========================================================================== */
+
+/* Container principal para limitar largura do conteúdo */
+.container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 var(--container-padding);
+}
+
+/* Estilos de tipografia para títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+    word-wrap: break-word;
+    transition: color 0.3s ease;
+}
+
+/* Estilos padrão para links */
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--secondary-color);
+}
+
+/* Remoção de bullets em listas */
+ul {
+    list-style: none;
+}
+
+/* Imagens responsivas */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ==========================================================================
+   3. Botões e Controles
+   ========================================================================== */
+
+/* Estilos base para todos os botões */
+button, .btn-primary, .btn-secondary, .btn-action {
+    cursor: pointer;
+    border: none;
+    border-radius: var(--border-radius);
+    padding: 8px 16px;
+    font-weight: 500;
+    transition: var(--transition);
+    white-space: nowrap;
+    font-size: 0.95rem;
+}
+
+/* Botão principal */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--secondary-color);
+}
+
+/* Botão secundário */
+.btn-secondary {
+    background-color: var(--card-bg);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--light-color);
+}
+
+/* Botão de ação - menor e mais sutil */
+.btn-action {
+    background-color: var(--light-color);
+    color: var(--text-color);
+    font-size: 0.85rem;
+    padding: 4px 8px;
+}
+
+.btn-action:hover {
+    background-color: var(--gray-color);
+}
+
+/* Botões de aprovação e rejeição */
+.btn-approve {
+    background-color: var(--success-color);
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-reject {
+    background-color: var(--danger-color);
+    color: white;
+    border-radius: var(--border-radius);
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Botão para adicionar novo item */
+.btn-add-item {
+    background-color: var(--success-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add-item:hover {
+    background-color: #218838;
+}
+
+/* Botão de alternância de tema */
+.theme-toggle {
+    background-color: var(--theme-toggle-bg);
+    color: var(--theme-toggle-text);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    box-shadow: 0 2px 4px var(--shadow-color);
+    margin: 0 10px;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.theme-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.theme-toggle:active .theme-icon {
+    transform: rotate(360deg);
+}
+
+/* Responsividade para botões */
+@media (max-width: 576px) {
+    button, .btn-primary, .btn-secondary, .btn-action {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .btn-add-item {
+        padding: 6px 12px;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+    }
+    
+    .form-actions button {
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .theme-toggle {
+        width: 35px;
+        height: 35px;
+        font-size: 1rem;
+    }
+}
+
+/* ==========================================================================
+   4. Modais
+   ========================================================================== */
+
+/* Container de modal - fundo escurecido */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Conteúdo do modal */
+.modal-content {
+    background-color: var(--card-bg);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    position: relative;
+    animation: modalFade 0.3s ease;
+    transition: background-color 0.3s ease;
+}
+
+/* Botão para fechar o modal */
+.modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.modal-close:hover {
+    color: var(--danger-color);
+}
+
+/* Botão cancelar no modal */
+.modal-cancel {
+    background-color: var(--light-color);
+    color: var(--text-color);
+}
+
+/* Animação de entrada para modais */
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Responsividade para modais */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px 15px;
+    }
+    
+    .modal-close {
+        top: 15px;
+        right: 15px;
+    }
+}
+
+/* ==========================================================================
+   5. Formulários
+   ========================================================================== */
+
+/* Grupo de formulário */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+}
+
+/* Área de ações do formulário */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+/* Estilos para campos de entrada */
+input[type="text"], 
+input[type="number"],
+select,
+textarea {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    width: 100%;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: var(--transition);
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 2px rgba(0, 160, 233, 0.2);
+}
+
+/* Estilos para textarea em formulários */
+#form-move-item textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    resize: vertical;
+    min-height: 100px;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+/* Responsividade para formulários */
+@media (max-width: 768px) {
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-actions {
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+    
+    input[type="text"],
+    input[type="number"],
+    select,
+    #form-move-item textarea {
+        font-size: 16px; /* Previne zoom em dispositivos iOS */
+    }
+}
+
+@media (max-width: 576px) {
+    .form-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ==========================================================================
+   6. Layout de Cabeçalho e Navegação
+   ========================================================================== */
+
+/* Cabeçalho principal */
+header {
+    background-color: var(--header-bg);
+    box-shadow: var(--box-shadow);
+    padding: 15px 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+/* Logotipo */
+.logo {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.logo img {
+    height: 70px;
+    margin-right: 10px;
+    max-height: 70px;
+    transition: all 0.3s ease;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+/* Informações do usuário */
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.username {
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.btn-logout {
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+/* Navegação principal */
+nav {
+    background-color: var(--nav-bg);
+    padding: 10px 0;
+    position: sticky;
+    top: 70px;
+    z-index: 90;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.main-menu {
+    display: flex;
+    gap: 5px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Para Firefox */
+    -ms-overflow-style: none; /* Para IE e Edge */
+    padding-bottom: 5px;
+}
+
+.main-menu::-webkit-scrollbar {
+    display: none; /* Para Chrome, Safari e Opera */
+}
+
+.main-menu li {
+    flex-shrink: 0;
+}
+
+.main-menu li a {
+    color: white;
+    padding: 8px 16px;
+    display: block;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.main-menu li a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.main-menu li a.active {
+    background-color: var(--secondary-color);
+}
+
+/* Controles de menu para mobile */
+.mobile-menu-toggle {
+    display: none;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+}
+
+/* Responsividade para cabeçalho e navegação */
+@media (max-width: 992px) {
+    header .container {
+        padding: 0 15px;
+    }
+    
+    .logo img {
+        height: 60px;
+        margin-right: 8px;
+    }
+    
+    .logo h1 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        padding: 10px 0;
+    }
+    
+    .logo img {
+        height: 50px;
+    }
+    
+    .logo h1 {
+        font-size: 1.2rem;
+    }
+    
+    .user-info {
+        gap: 10px;
+    }
+    
+    nav {
+        top: 60px;
+    }
+    
+    .main-menu {
+        padding-bottom: 3px;
+    }
+    
+    .main-menu li a {
+        padding: 6px 12px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    header .container {
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .logo {
+        margin-bottom: 5px;
+    }
+    
+    .user-info {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .mobile-menu-toggle {
+        display: block;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+    }
+    
+    nav {
+        top: auto;
+    }
+    
+    .main-menu.collapsed {
+        display: none;
+    }
+    
+    .main-menu {
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .main-menu li {
+        width: 100%;
+    }
+    
+    .main-menu li a {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* ==========================================================================
+   7. Conteúdo Principal
+   ========================================================================== */
+
+/* Área principal de conteúdo */
+main {
+    padding: 30px 0;
+    position: relative;
+    min-height: calc(100vh - 150px);
+}
+
+/* Seções de conteúdo */
+section {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    padding: 25px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+section h2 {
+    border-bottom: 2px solid var(--light-color);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    color: var(--primary-color);
+}
+
+/* Responsividade para conteúdo principal */
+@media (max-width: 992px) {
+    main {
+        padding: 25px 0;
+    }
+    
+    section {
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+    
+    section h2 {
+        padding-bottom: 12px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    main {
+        padding: 20px 0;
+    }
+    
+    section {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    
+    section h2 {
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 576px) {
+    main {
+        padding: 15px 0;
+    }
+    
+    section {
+        padding: 15px 12px;
+        border-radius: 6px;
+    }
+    
+    section h2 {
+        font-size: 1.3rem;
+        padding-bottom: 10px;
+    }
+}
+
+/* ==========================================================================
+   8. Dashboard
+   ========================================================================== */
+
+/* Grid de cards do dashboard */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Cards individuais */
+.card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border-top: 4px solid var(--primary-color);
+    height: 100%;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+[data-theme="dark"] .card {
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.card h3 {
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.card .number {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text-primary);
+}
+
+/* Indicadores de tendência */
+.card .trend {
+    font-size: 0.85rem;
+}
+
+.trend.positive {
+    color: var(--success-color);
+}
+
+.trend.negative {
+    color: var(--danger-color);
+}
+
+.trend.neutral {
+    color: var(--text-light);
+}
+
+/* Responsividade para dashboard */
+@media (max-width: 992px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 15px;
+    }
+    
+    .card {
+        padding: 15px;
+    }
+    
+    .card .number {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard-cards {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+    }
+    
+    .card {
+        padding: 12px;
+    }
+    
+    .card h3 {
+        font-size: 0.9rem;
+    }
+    
+    .card .number {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .card {
+        max-width: 100%;
+    }
+}
+
+/* ==========================================================================
+   9. Sistema de Inventário
+   ========================================================================== */
+
+/* Busca e filtros */
+.search-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.search-section {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+/* Campo de busca no filtro */
+.search-filter input[type="text"] {
+    flex: 1;
+    min-width: 200px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    transition: all 0.2s;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+}
+
+.search-filter input[type="text"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Seleção nos filtros */
+.search-filter select {
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background-color: var(--card-bg);
+    color: var(--text-primary);
+    transition: all 0.2s;
+    max-width: 100%;
+}
+
+.search-filter select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+/* Botão no filtro */
+.search-filter button {
+    height: 38px;
+    padding: 0 15px;
+}
+
+/* Informações de resultados da busca */
+.search-results-info {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background-color: var(--light-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--primary-color);
+}
+
+.search-count {
+    font-weight: 500;
+    color: var(--primary-color);
+}
+
+.no-results {
+    color: var(--danger-color);
+}
+
+/* Histórico de busca */
+.search-history-container {
+    margin: 10px 0;
+    padding: 8px 12px;
+    background-color: var(--light-color);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.search-history-container h4 {
+    font-size: 0.85rem;
+    margin: 0 0 8px;
+    color: var(--text-light);
+}
+
+.search-history-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin-bottom: 8px;
+}
+
+.search-history-item {
+    display: inline-block;
+    padding: 3px 10px;
+    background-color: var(--gray-color);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: var(--text-primary);
+}
+
+.search-history-item:hover {
+    background-color: var(--light-accent);
+}
+
+/* Toggle para filtros avançados */
+.advanced-filters-toggle {
+    margin-bottom: 10px;
+}
+
+.btn-toggle-filters {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.9rem;
+    padding: 5px 10px;
+}
+
+.btn-toggle-filters .icon-chevron-down {
+    transition: transform 0.3s;
+}
+
+.btn-toggle-filters.active .icon-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Filtros avançados */
+.advanced-filters {
+    margin-bottom: 15px;
+    padding: 12px;
+    background-color: var(--light-color);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.filter-group label {
+    font-size: 0.9rem;
+    margin-bottom: 0;
+    white-space: nowrap;
+    color: var(--text-primary);
+}
+
+/* Destacar termos de busca */
+.highlight {
+    background-color: rgba(255, 235, 59, 0.5);
+    padding: 2px 0;
+    border-radius: 2px;
+}
+
+/* Tabela de inventário */
+.inventory-table {
+    overflow-x: auto;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 600px;
+}
+
+thead th {
+    background-color: var(--light-color);
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    color: var(--text-primary);
+}
+
+tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid var(--border-color);
+    word-break: break-word;
+    color: var(--text-primary);
+}
+
+/* Indicadores de status */
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status.available {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.status.low {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.status.reserved {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color);
+}
+
+/* Badge de status */
+.status-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.status-badge.available {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.status-badge.low {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+.status-badge.reserved {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color);
+}
+
+/* Paginação */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.pagination a {
+    padding: 8px 12px;
+    border-radius: var(--border-radius);
+    background-color: var(--light-color);
+    color: var(--text-color);
+    transition: var(--transition);
+}
+
+.pagination a.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Botões específicos no inventário */
+.btn-details, .btn-move {
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+/* Responsividade para sistema de inventário */
+@media (max-width: 992px) {
+    .search-filter {
+        gap: 8px;
+    }
+    
+    .search-filter input[type="text"] {
+        min-width: 180px;
+    }
+    
+    .filter-row {
+        gap: 10px;
+    }
+}
+
+@media (max-width: 768px) {
+    .search-filter {
+        flex-direction: column;
+    }
+    
+    .search-filter input[type="text"],
+    .search-filter select,
+    .search-filter button {
+        width: 100%;
+    }
+    
+    .filter-row {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .filter-group {
+        width: 100%;
+    }
+    
+    .filter-group label,
+    .filter-group select {
+        width: 100%;
+    }
+    
+    .filter-group select {
+        margin-top: 5px;
+    }
+    
+    thead th, tbody td {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .pagination a {
+        padding: 6px 10px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .btn-details, .btn-move {
+        display: block;
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 5px;
+        text-align: center;
+    }
+    
+    thead th, tbody td {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+    
+    .inventory-table {
+        margin-left: -12px;
+        margin-right: -12px;
+        width: calc(100% + 24px);
+    }
+    
+    .pagination a {
+        padding: 5px 8px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ==========================================================================
+   10. Sistema de Rastreamento
+   ========================================================================== */
+
+/* Layout do sistema de rastreamento */
+.tracking-system {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.tracking-info {
+    padding-right: 30px;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Lista de benefícios */
+.benefits {
+    margin: 20px 0;
+}
+
+.benefits li {
+    padding: 8px 0;
+    position: relative;
+    padding-left: 25px;
+    color: var(--text-primary);
+}
+
+.benefits li:before {
+    content: "✓";
+    color: var(--success-color);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Caixa do scanner */
+.scanner-box {
+    background-color: var(--light-color);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.scanner-placeholder {
+    background-color: var(--gray-color);
+    height: 200px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border: 2px dashed var(--text-light);
+    color: var(--text-primary);
+}
+
+/* Formulário dentro da caixa do scanner */
+.scanner-box input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.scanner-box .btn-primary {
+    width: 100%;
+}
+
+/* Área de resultados de rastreamento */
+.tracking-result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: var(--light-color);
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.tracking-item-info {
+    margin-bottom: 20px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-row:last-child {
+    border-bottom: none;
+}
+
+.info-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.info-value {
+    color: var(--text-primary);
+}
+
+.tracking-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Responsividade para sistema de rastreamento */
+@media (max-width: 992px) {
+    .tracking-system {
+        gap: 20px;
+    }
+    
+    .tracking-info {
+        padding-right: 20px;
+    }
+    
+    .scanner-box {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .tracking-system {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .tracking-info {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+    }
+    
+    .scanner-placeholder {
+        height: 150px;
+    }
+
+    .tracking-actions {
+        flex-direction: column;
+    }
+
+    .tracking-actions button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .scanner-box {
+        padding: 12px;
+    }
+    
+    .tracking-result {
+        padding: 12px;
+    }
+
+    .info-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+/* ==========================================================================
+   11. Fluxo de Aprovação
+   ========================================================================== */
+
+/* Layout do fluxo de aprovação */
+.approval-flow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.approval-explanation {
+    padding-right: 30px;
+    border-right: 1px solid var(--border-color);
+}
+
+/* Passos de aprovação */
+.approval-steps {
+    margin: 20px 0;
+}
+
+.approval-steps li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.approval-steps li span {
+    background-color: var(--primary-color);
+    color: white;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Lista de itens para aprovação */
+.approval-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.approval-item {
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: var(--card-bg);
+}
+
+.approval-header {
+    background-color: var(--light-color);
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.approval-id {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.approval-date {
+    color: var(--text-secondary);
+}
+
+.approval-content {
+    padding: 15px;
+}
+
+.approval-content p {
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.approval-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 15px;
+    background-color: var(--light-color);
+    flex-wrap: wrap;
+}
+
+.no-approvals-message {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-light);
+    background-color: var(--light-color);
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+/* Responsividade para fluxo de aprovação */
+@media (max-width: 992px) {
+    .approval-flow {
+        gap: 20px;
+    }
+    
+    .approval-explanation {
+        padding-right: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .approval-flow {
+        grid-template-columns: 1fr;
+    }
+    
+    .approval-explanation {
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .approval-actions {
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 576px) {
+    .approval-header {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .approval-content {
+        padding: 12px;
+    }
+    
+    .approval-actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .approval-actions button {
+        width: 100%;
+    }
+
+    .no-approvals-message {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================================================================
+   12. Relatórios e Análises
+   ========================================================================== */
+
+/* Grid de relatórios */
+.reports-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* Card de relatório */
+.report-card {
+    background-color: var(--card-bg);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.report-card h3 {
+    color: var(--text-primary);
+}
+
+/* Placeholder para gráficos */
+.chart-placeholder {
+    background-color: var(--light-color);
+    height: 150px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    border: 2px dashed var(--text-light);
+    color: var(--text-primary);
+}
+
+.report-card p {
+    margin-bottom: 15px;
+    flex-grow: 1;
+    color: var(--text-primary);
+}
+
+/* Responsividade para relatórios e análises */
+@media (max-width: 992px) {
+    .reports-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 15px;
+    }
+    
+    .report-card {
+        padding: 15px;
+    }
+    
+    .chart-placeholder {
+        height: 130px;
+    }
+}
+
+@media (max-width: 768px) {
+    .reports-grid {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 15px;
+    }
+    
+    .chart-placeholder {
+        height: 120px;
+    }
+}
+
+@media (max-width: 576px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-card {
+        max-width: 100%;
+    }
+}
+
+/* ==========================================================================
+   13. Painel de Ajuda
+   ========================================================================== */
+
+/* Painel lateral de ajuda */
+.help-panel {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--card-bg);
+    box-shadow: -2px 0 10px var(--shadow-color);
+    border-radius: 8px 0 0 8px;
+    overflow: hidden;
+    width: 300px;
+    transform: translateX(270px);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    z-index: 80;
+}
+
+.help-panel:hover {
+    transform: translateX(0);
+}
+
+/* Botão de alternância do painel de ajuda */
+.help-toggle {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 60px;
+    background-color: var(--primary-color);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 5px 0 0 5px;
+    cursor: pointer;
+}
+
+/* Conteúdo do painel de ajuda */
+.help-content {
+    padding: 20px;
+    padding-left: 40px;
+}
+
+.help-content h3 {
+    color: var(--text-primary);
+}
+
+.help-links li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.help-links li:last-child {
+    border-bottom: none;
+}
+
+.help-links a {
+    color: var(--text-primary);
+}
+
+.help-content h4 {
+    color: var(--text-primary);
+}
+
+/* Botão de suporte */
+.btn-support {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--border-radius);
+    border: none;
+    margin-top: 15px;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* Responsividade para painel de ajuda */
+@media (max-width: 992px) {
+    .help-panel {
+        width: 250px;
+        transform: translateX(220px);
+    }
+    
+    .help-content {
+        padding: 15px;
+        padding-left: 35px;
+    }
+}
+
+@media (max-width: 768px) {
+    .help-panel {
+        display: none;
+    }
+    
+    /* Alternativa para o painel de ajuda em dispositivos móveis */
+    .mobile-help-button {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        box-shadow: var(--box-shadow);
+        z-index: 80;
+    }
+    
+    .mobile-help-modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+    
+    .mobile-help-content {
+        background-color: var(--card-bg);
+        margin: 10% auto;
+        padding: 20px;
+        border-radius: 8px;
+        width: 90%;
+        max-width: 400px;
+        box-shadow: 0 5px 15px var(--shadow-color);
+    }
+}
+
+/* ==========================================================================
+   14. Rodapé
+   ========================================================================== */
+
+/* Rodapé principal */
+footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-text);
+    padding: 30px 0;
+    margin-top: 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+/* Logotipo do rodapé */
+.footer-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.footer-logo img {
+    height: 30px;
+    margin-right: 10px;
+}
+
+.footer-logo span {
+    color: var(--footer-text);
+}
+
+/* Informações do rodapé */
+.footer-info p {
+    font-size: 0.85rem;
+    color: var(--footer-text);
+    opacity: 0.8;
+}
+
+/* Links do rodapé */
+.footer-links ul {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: var(--footer-text);
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+}
+
+/* Responsividade para rodapé */
+@media (max-width: 992px) {
+    footer {
+        padding: 25px 0;
+    }
+    
+    .footer-info p {
+        font-size: 0.8rem;
+    }
+    
+    .footer-links ul {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    footer .container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .footer-links {
+        margin-top: 15px;
+    }
+    
+    .footer-links ul {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    footer {
+        padding: 20px 0;
+    }
+    
+    .footer-links ul {
+        gap: 12px;
+        justify-content: center;
+    }
+    
+    .footer-links a {
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================================================================
+   15. Responsividade (Regras Adicionais)
+   ========================================================================== */
+
+/* Classes utilitárias para responsividade */
+.hide-on-mobile {
+    display: block;
+}
+
+.show-on-mobile {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .hide-on-mobile {
+        display: none;
+    }
+    
+    .show-on-mobile {
+        display: block;
+    }
+}
+
+/* Ajustes para tabelas responsivas */
+.responsive-table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Ajustes para imagens responsivas */
+.responsive-img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Ajustes para texto responsivo */
+@media (max-width: 576px) {
+    body {
+        font-size: 0.95rem;
+    }
+    
+    h1 {
+        font-size: 1.8rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    h3 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Alinhamento de botões em telas pequenas */
+@media (max-width: 576px) {
+    .btn-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .btn-group button,
+    .btn-group .btn-primary,
+    .btn-group .btn-secondary {
+        width: 100%;
+        margin: 0 !important;
+    }
+}
+
+/* ==========================================================================
+   16. Utilitários e Componentes Específicos
+   ========================================================================== */
+
+/* Histórico do item */
+.item-history {
+    margin-bottom: 25px;
+}
+
+.item-history h4 {
+    margin-bottom: 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--primary-color);
+}
+
+/* Tabela de histórico com scroll vertical */
+.history-table {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.history-table table {
+    margin-bottom: 0;
+}
+
+/* Cabeçalho fixo na tabela de histórico ao rolar */
+.history-table th {
+    position: sticky;
+    top: 0;
+    background-color: var(--light-color);
+    z-index: 1;
+}
+
+/* Item para movimentação */
+.item-to-move {
+    border-left: 4px solid var(--accent-color);
+    margin-bottom: 20px;
+    padding-left: 15px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.detail-value {
+    color: var(--text-primary);
+}
+
+/* Responsividade para componentes específicos */
+@media (max-width: 768px) {
+    .history-table {
+        max-height: 180px;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+@media (max-width: 576px) {
+    .item-history h4 {
+        font-size: 1.1rem;
+    }
+    
+    .history-table {
+        max-height: 150px;
+    }
+}
+
+/* ==========================================================================
+   17. Animações
+   ========================================================================== */
+
+/* Animação para modais */
+@keyframes modalFade {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para notificações */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--card-bg);
+    border-radius: 5px;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    padding: 15px 20px;
+    max-width: 300px;
+    z-index: 1000;
+    transform: translateX(120%);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    color: var(--text-primary);
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification.success {
+    border-left: 4px solid var(--success-color);
+}
+
+.notification.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.notification.error {
+    border-left: 4px solid var(--danger-color);
+}
+
+.notification.info {
+    border-left: 4px solid var(--primary-color);
+}
+
+/* Animações de transição */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes highlight {
+    0% { background-color: rgba(0, 160, 233, 0.1); }
+    50% { background-color: rgba(0, 160, 233, 0.3); }
+    100% { background-color: transparent; }
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Efeitos para mudanças de dados */
+.row-updated {
+    animation: highlight 2s ease;
+}
+
+.item-updated {
+    animation: highlight 2s ease;
+}
+
+.highlight-change {
+    animation: pulse 1s ease;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Estilos para itens de aprovação */
+.approval-item {
+    transition: all 0.3s ease;
+}
+
+.approval-item[data-status="approved"] {
+    border-left: 4px solid var(--success-color);
+}
+
+.approval-item[data-status="rejected"] {
+    border-left: 4px solid var(--danger-color);
+}
+
+.approval-item.animated {
+    animation: fadeIn 0.5s ease;
+}
+
+.approval-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.approval-status.approved {
+    background-color: rgba(40, 167, 69, 0.1);
+    color: var(--success-color);
+}
+
+.approval-status.rejected {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--danger-color);
+}
+
+.approval-status.pending {
+    background-color: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+}
+
+/* Responsividade para notificações */
+@media (max-width: 768px) {
+    .notification {
+        max-width: 280px;
+        padding: 12px 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .notification {
+        max-width: calc(100% - 40px);
+        right: 20px;
+        left: 20px;
+        top: 10px;
+        padding: 10px 15px;
+    }
+}
+
+/* ==========================================================================
+   18. Componentes de Gráficos e Visualizações
+   ========================================================================== */
+
+/* Container para os gráficos */
+.chart-container {
+    width: 100%;
+    height: 200px;
+    position: relative;
+    margin-bottom: 15px;
+}
+
+/* Estilização dos tooltips dos gráficos */
+.chartjs-tooltip {
+    background-color: var(--card-bg) !important;
+    border-radius: 5px !important;
+    box-shadow: 0 2px 10px var(--shadow-color) !important;
+    padding: 8px 12px !important;
+    border-left: 3px solid var(--primary-color) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Estilização para o texto central do gráfico de rosca */
+.chart-center-text {
+    font-size: 1rem;
+    font-weight: 500;
+    background-color: var(--card-bg);
+    padding: 5px 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    pointer-events: none;
+    color: var(--text-primary);
+}
+
+/* Animação de carregamento para os gráficos */
+@keyframes chartFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.chart-container {
+    animation: chartFadeIn 0.5s ease forwards;
+}
+
+/* Legenda personalizada para gráficos */
+.chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 10px;
+    font-size: 0.85rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-primary);
+}
+
+.legend-color {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+/* Histórico de movimentação */
+.movement-history {
+    list-style: none;
+    padding: 0;
+}
+
+.movement-history li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border-color);
+    color: var(--text-primary);
+}
+
+.history-date {
+    font-size: 0.85rem;
+    color: var(--text-light);
+}
+
+.history-action {
+    font-weight: 500;
+    margin: 5px 0;
+    color: var(--text-primary);
+}
+
+.history-user {
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
+/* Responsividade para gráficos */
+@media (max-width: 992px) {
+    .chart-container {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 250px;
+    }
+    
+    .chart-legend {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-container {
+        height: 200px;
+    }
+
+    .movement-history li {
+        padding: 8px 0;
+    }
+    
+    .history-date {
+        font-size: 0.8rem;
+    }
+    
+    .history-action {
+        font-size: 0.9rem;
+    }
+    
+    .history-user {
+        font-size: 0.85rem;
+    }
+}
+
+/* ==========================================================================
+   19. Estados e Feedback Visual
+   ========================================================================== */
+
+/* Ajustes para Dashboard */
+#dashboard .card .number {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para destacar o cartão de aprovações pendentes quando há novas */
+#dashboard .card:nth-child(3).has-pending {
+    animation: pulse 2s infinite;
+}
+
+/* Estilos para estado vazio */
+.empty-state {
+    text-align: center;
+    padding: 30px;
+    color: var(--text-light);
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    opacity: 0.5;
+}
+
+.empty-state-message {
+    margin-bottom: 15px;
+    color: var(--text-primary);
+}
+
+/* Sistema de rastreamento - estados especiais */
+.scanner-placeholder.scanning {
+    background-color: #c8e6c9;
+    border-color: var(--success-color);
+    transition: all 0.3s ease;
+    color: var(--success-color);
+}
+
+[data-theme="dark"] .scanner-placeholder.scanning {
+    background-color: rgba(129, 199, 132, 0.2);
+}
+
+.tracking-result {
+    animation: fadeIn 0.5s ease;
+}
+
+/* Responsividade para estados vazios */
+@media (max-width: 768px) {
+    .empty-state {
+        padding: 25px;
+    }
+    
+    .empty-state-icon {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .empty-state {
+        padding: 20px;
+    }
+    
+    .empty-state-icon {
+        font-size: 2rem;
+    }
+    
+    .no-approvals-message {
+        padding: 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================================================================
+   20. Sistema de Grid Flexível e Utilitários
+   ========================================================================== */
+
+/* Sistema de grid flexível */
+.flex-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -10px;
+    margin-right: -10px;
+}
+
+.flex-grid-item {
+    padding: 0 10px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.col-1 { width: 8.33%; }
+.col-2 { width: 16.66%; }
+.col-3 { width: 25%; }
+.col-4 { width: 33.33%; }
+.col-5 { width: 41.66%; }
+.col-6 { width: 50%; }
+.col-7 { width: 58.33%; }
+.col-8 { width: 66.66%; }
+.col-9 { width: 75%; }
+.col-10 { width: 83.33%; }
+.col-11 { width: 91.66%; }
+.col-12 { width: 100%; }
+
+/* Responsividade para o sistema de grid */
+@media (max-width: 992px) {
+    .col-md-1 { width: 8.33%; }
+    .col-md-2 { width: 16.66%; }
+    .col-md-3 { width: 25%; }
+    .col-md-4 { width: 33.33%; }
+    .col-md-5 { width: 41.66%; }
+    .col-md-6 { width: 50%; }
+    .col-md-7 { width: 58.33%; }
+    .col-md-8 { width: 66.66%; }
+    .col-md-9 { width: 75%; }
+    .col-md-10 { width: 83.33%; }
+    .col-md-11 { width: 91.66%; }
+    .col-md-12 { width: 100%; }
+}
+
+@media (max-width: 768px) {
+    .col-sm-1 { width: 8.33%; }
+    .col-sm-2 { width: 16.66%; }
+    .col-sm-3 { width: 25%; }
+    .col-sm-4 { width: 33.33%; }
+    .col-sm-5 { width: 41.66%; }
+    .col-sm-6 { width: 50%; }
+    .col-sm-7 { width: 58.33%; }
+    .col-sm-8 { width: 66.66%; }
+    .col-sm-9 { width: 75%; }
+    .col-sm-10 { width: 83.33%; }
+    .col-sm-11 { width: 91.66%; }
+    .col-sm-12 { width: 100%; }
+}
+
+@media (max-width: 576px) {
+    .col-xs-1 { width: 8.33%; }
+    .col-xs-2 { width: 16.66%; }
+    .col-xs-3 { width: 25%; }
+    .col-xs-4 { width: 33.33%; }
+    .col-xs-5 { width: 41.66%; }
+    .col-xs-6 { width: 50%; }
+    .col-xs-7 { width: 58.33%; }
+    .col-xs-8 { width: 66.66%; }
+    .col-xs-9 { width: 75%; }
+    .col-xs-10 { width: 83.33%; }
+    .col-xs-11 { width: 91.66%; }
+    .col-xs-12 { width: 100%; }
+}
+
+/* Classes de espaçamento flexível */
+.mb-0 { margin-bottom: 0 !important; }
+.mb-1 { margin-bottom: 5px !important; }
+.mb-2 { margin-bottom: 10px !important; }
+.mb-3 { margin-bottom: 15px !important; }
+.mb-4 { margin-bottom: 20px !important; }
+.mb-5 { margin-bottom: 30px !important; }
+
+.mt-0 { margin-top: 0 !important; }
+.mt-1 { margin-top: 5px !important; }
+.mt-2 { margin-top: 10px !important; }
+.mt-3 { margin-top: 15px !important; }
+.mt-4 { margin-top: 20px !important; }
+.mt-5 { margin-top: 30px !important; }
+
+.ml-0 { margin-left: 0 !important; }
+.ml-1 { margin-left: 5px !important; }
+.ml-2 { margin-left: 10px !important; }
+.ml-3 { margin-left: 15px !important; }
+.ml-4 { margin-left: 20px !important; }
+.ml-5 { margin-left: 30px !important; }
+
+.mr-0 { margin-right: 0 !important; }
+.mr-1 { margin-right: 5px !important; }
+.mr-2 { margin-right: 10px !important; }
+.mr-3 { margin-right: 15px !important; }
+.mr-4 { margin-right: 20px !important; }
+.mr-5 { margin-right: 30px !important; }
+
+.p-0 { padding: 0 !important; }
+.p-1 { padding: 5px !important; }
+.p-2 { padding: 10px !important; }
+.p-3 { padding: 15px !important; }
+.p-4 { padding: 20px !important; }
+.p-5 { padding: 30px !important; }
+
+/* Utilitários de texto responsivos */
+.text-xs { font-size: 0.75rem !important; }
+.text-sm { font-size: 0.875rem !important; }
+.text-md { font-size: 1rem !important; }
+.text-lg { font-size: 1.125rem !important; }
+.text-xl { font-size: 1.25rem !important; }
+
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+@media (max-width: 768px) {
+    .text-sm-center { text-align: center !important; }
+    .text-sm-left { text-align: left !important; }
+    .text-sm-right { text-align: right !important; }
+}
+
+@media (max-width: 576px) {
+    .text-xs-center { text-align: center !important; }
+    .text-xs-left { text-align: left !important; }
+    .text-xs-right { text-align: right !important; }
+}
+
+/* Classes de display flexível */
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+.d-inline { display: inline !important; }
+.d-inline-block { display: inline-block !important; }
+
+@media (max-width: 768px) {
+    .d-sm-none { display: none !important; }
+    .d-sm-block { display: block !important; }
+    .d-sm-flex { display: flex !important; }
+    .d-sm-inline { display: inline !important; }
+    .d-sm-inline-block { display: inline-block !important; }
+}
+
+@media (max-width: 576px) {
+    .d-xs-none { display: none !important; }
+    .d-xs-block { display: block !important; }
+    .d-xs-flex { display: flex !important; }
+    .d-xs-inline { display: inline !important; }
+    .d-xs-inline-block { display: inline-block !important; }
+}
+
+/* Flexibilidade para botões responsivos */
+.btn-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+@media (max-width: 576px) {
+    .btn-flex {
+        flex-direction: column;
+    }
+    
+    .btn-flex .btn-primary,
+    .btn-flex .btn-secondary,
+    .btn-flex button {
+        width: 100%;
+    }
+}
+
+/* Ajustes para scrollbar horizontal */
+.horizontal-scroll {
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    -ms-overflow-style: none;
+    padding-bottom: 5px;
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 4px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    background: var(--light-color);
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: var(--gray-color);
+    border-radius: 4px;
+}
+
+/* Otimizações para telas pequenas */
+@media (max-width: 576px) {
+    input, select, button {
+        font-size: 16px !important; /* Evita zoom automático em iOS */
+    }
+    
+    .mobile-stack {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .mobile-stack > * {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .mobile-stack > *:last-child {
+        margin-bottom: 0;
+    }
+    
+    .mobile-overflow-fix {
+        overflow-x: hidden;
+        max-width: 100vw;
+    }
+    
+    .mobile-centered {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+/* ==========================================================================
+   21. Estilos Específicos para Gráficos Customizados
+   ========================================================================== */
+
+/* Gráfico de barras para consumo */
+.chart-bars {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 150px;
+    gap: 5px;
+}
+
+.chart-day {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.chart-bar-group {
+    display: flex;
+    gap: 3px;
+    height: 100%;
+    align-items: flex-end;
+    margin-bottom: 5px;
+}
+
+.chart-bar {
+    width: 10px;
+    transition: height 0.5s ease;
+}
+
+.chart-bar.consumed {
+    background-color: #ff6b6b;
+}
+
+.chart-bar.total {
+    background-color: #4dabf7;
+}
+
+.chart-label {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    transform: rotate(-45deg);
+    white-space: nowrap;
+}
+
+/* Gráfico de distribuição logística */
+.logistics-chart {
+    width: 100%;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.logistics-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logistics-label {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.logistics-bar-container {
+    flex-grow: 1;
+    height: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 100px;
+}
+
+.logistics-bar-in, .logistics-bar-out {
+    height: 10px;
+    background-color: var(--success-color);
+    border-radius: 2px;
+}
+
+.logistics-bar-out {
+    background-color: var(--danger-color);
+}
+
+.logistics-values {
+    width: 70px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8rem;
+    margin-left: 10px;
+}
+
+.in-value {
+    color: var(--success-color);
+}
+
+.out-value {
+    color: var(--danger-color);
+}
+
+/* Gráfico de pizza para inventário */
+.pie-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+.pie-chart {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 2px 10px var(--shadow-color);
+}
+
+.pie-center {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background-color: var(--card-bg);
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    box-shadow: 0 0 10px var(--shadow-color) inset;
+}
+
+.pie-stats {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.pie-stat {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+}
+
+.stat-color {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.pie-stat.available .stat-color {
+    background-color: #28a745;
+}
+
+.pie-stat.low .stat-color {
+    background-color: #ffc107;
+}
+
+.pie-stat.reserved .stat-color {
+    background-color: #007bff;
+}
+
+.stat-label {
+    flex: 1;
+}
+
+.stat-value {
+    font-weight: 500;
+}
+
+/* Gráfico de tempo de resposta */
+.response-chart {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.response-item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.response-process {
+    width: 100px;
+    text-align: right;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+}
+
+.response-bars {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 100px;
+}
+
+.response-bar-container {
+    height: 15px;
+    width: 100%;
+}
+
+.response-bar {
+    height: 100%;
+    border-radius: 3px;
+    position: relative;
+    transition: width 0.5s ease;
+}
+
+.response-bar span {
+    position: absolute;
+    right: 5px;
+    font-size: 0.75rem;
+    color: white;
+    font-weight: 500;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+}
+
+.response-bar.before {
+    background-color: #adb5bd;
+}
+
+.response-bar.after {
+    background-color: #007bff;
+}
+
+.response-improvement {
+    width: 60px;
+    margin-left: 10px;
+    color: var(--success-color);
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+/* Gráfico genérico (placeholder) */
+.generic-chart {
+    border: 2px dashed var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-message {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-primary);
+}
+
+.chart-icon {
+    font-size: 2rem;
+}
+
+/* Responsividade para gráficos customizados */
+@media (max-width: 768px) {
+    .chart-bars {
+        height: 120px;
+    }
+    
+    .chart-bar {
+        width: 8px;
+    }
+
+    .logistics-item {
+        margin-bottom: 10px;
+    }
+    
+    .logistics-label {
+        width: 90px;
+        font-size: 0.85rem;
+    }
+    
+    .logistics-values {
+        width: 60px;
+        font-size: 0.75rem;
+    }
+
+    .pie-container {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .pie-center {
+        width: 60px;
+        height: 60px;
+        font-size: 1.1rem;
+    }
+    
+    .pie-stats {
+        margin-top: 15px;
+    }
+
+    .response-process {
+        width: 90px;
+        font-size: 0.85rem;
+    }
+    
+    .response-bar span {
+        font-size: 0.7rem;
+    }
+    
+    .response-improvement {
+        width: 50px;
+        font-size: 0.85rem;
+    }
+
+    .generic-chart {
+        padding: 15px;
+    }
+    
+    .chart-icon {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .chart-bars {
+        gap: 2px;
+    }
+    
+    .chart-bar {
+        width: 6px;
+    }
+    
+    .chart-bar-group {
+        gap: 2px;
+    }
+    
+    .chart-label {
+        font-size: 0.65rem;
+    }
+
+    .logistics-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .logistics-label {
+        width: 100%;
+        text-align: left;
+        margin-right: 0;
+    }
+    
+    .logistics-bar-container {
+        width: 100%;
+    }
+    
+    .logistics-values {
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+
+    .pie-container {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pie-center {
+        width: 50px;
+        height: 50px;
+        font-size: 1rem;
+    }
+    
+    .stat-label, .stat-value {
+        font-size: 0.9rem;
+    }
+
+    .response-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .response-process {
+        width: 100%;
+        text-align: left;
+        margin-right: 0;
+    }
+    
+    .response-bars {
+        width: 100%;
+    }
+    
+    .response-improvement {
+        width: auto;
+        margin-left: 0;
+        margin-top: 5px;
+    }
+}
+
+/* ==========================================================================
+   22. Estilos de Loading e Estados de Carregamento
+   ========================================================================== */
+
+/* Estilo para o loading dos gráficos */
+.chart-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--card-bg);
+    opacity: 0.8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    z-index: 10;
+}
+
+.chart-loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-left-color: var(--primary-color);
+    animation: spin 1s ease infinite;
+}
+
+[data-theme="dark"] .chart-loading {
+    background-color: var(--card-bg);
+}
+
+[data-theme="dark"] .chart-loading-spinner {
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-left-color: var(--primary-color);
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estilo para resumos abaixo dos gráficos */
+.chart-summary {
+    background-color: var(--light-color);
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    border-left: 3px solid var(--primary-color);
+}
+
+.chart-summary strong {
+    color: var(--primary-color);
+}
+
+/* Responsividade para resumos de gráficos */
+@media (max-width: 768px) {
+    .chart-summary {
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Estilos para exportação de gráficos */
+.chart-export {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: var(--card-bg);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px var(--shadow-color);
+    z-index: 5;
+    opacity: 0.7;
+    transition: opacity 0.2s ease;
+}
+
+.chart-export:hover {
+    opacity: 1;
+}
+
+.chart-export svg {
+    width: 16px;
+    height: 16px;
+    fill: var(--primary-color);
+}
+
+/* ==========================================================================
+   RESUMO DAS PRINCIPAIS CARACTERÍSTICAS DO SISTEMA COM MODO ESCURO:
+   
+   Este CSS foi expandido para incluir suporte completo ao modo escuro:
+   
+   1. Variáveis CSS definidas para ambos os temas (claro e escuro)
+   2. Transições suaves entre os modos de tema
+   3. Cores adaptadas para melhor legibilidade no modo escuro
+   4. Sombras e contrastes ajustados para cada tema
+   5. Componentes visuais (gráficos, cards, modais) otimizados
+   6. Botão de alternância de tema integrado ao cabeçalho
+   7. Estados visuais (hover, focus, active) adaptados
+   8. Preservação da usabilidade em ambos os temas
+   
+   Principais melhorias para o modo escuro:
+   
+   1. Esquema de cores cuidadosamente selecionado
+   2. Contraste adequado para acessibilidade
+   3. Feedback visual consistente
+   4. Transições suaves entre os temas
+   5. Compatibilidade com todos os componentes existentes
+   6. Responsividade mantida em ambos os temas
+   
+   O sistema mantém todas as funcionalidades originais enquanto oferece
+   uma experiência visual aprimorada com a opção de modo escuro.
+   ========================================================================== */
